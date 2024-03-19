@@ -5,7 +5,8 @@ app.use(express.json());
 const cors = require("cors");
 
 const mongoose = require("mongoose");
-let string = require("crypto").randomBytes(64).toString("hex");
+const { send } = require("process");
+
 app.use(cors());
 mongoose
   .connect("mongodb://localhost/meo")
@@ -35,8 +36,9 @@ app.post("/signu", async (req, res) => {
     console.log("taken");
     return;
   }
+
   CreateAndSaveTheData(req.body)
-    .then(() => {
+    .then((string) => {
       res.json({ action: "created", string: string });
     })
     .catch((e) => {
@@ -45,14 +47,24 @@ app.post("/signu", async (req, res) => {
     });
 });
 async function CreateAndSaveTheData(data) {
+  let string = require("crypto").randomBytes(64).toString("hex");
   data.string = string;
   console.log(data);
   const newAccount = new m(data);
   await newAccount.save();
+  return string;
 }
+app.post("/check", (req, res) => {
+  console.log("checking");
+  let find = m.find({ string: req.body });
 
+  if (find.length !== 0) {
+    res.send("sin");
+    console.log("true");
+  }
+});
 app.post("/signin", (req, res) => {
-  res.send("Welcome");
+ 
   check(req.body)
     .then(() => res.json({ action: "signin" }))
     .catch((e) => {
