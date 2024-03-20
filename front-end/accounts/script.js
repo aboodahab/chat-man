@@ -49,6 +49,6 @@ function checkAndTake() {
       console.log(r);
     });
   console.log(data);
-  window.location = "http://127.0.0.1:5500/chat/index.html";
+  //window.location = "http://127.0.0.1:5500/chat/index.html";
 }
 window.onload = checkAndTake();

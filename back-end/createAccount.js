@@ -66,7 +66,7 @@ app.post("/check", (req, res) => {
 app.post("/signin", (req, res) => {
  
   check(req.body)
-    .then(() => res.json({ action: "signin" }))
+    .then(() =>  res.json({ action: "signin" }))
     .catch((e) => {
       console.log("error", e);
       res.json({ action: "Error" });

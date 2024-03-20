@@ -5,8 +5,18 @@ body{
     justify-content: center;
     height: 100%;
 }
-.messages{
+.messages-container{
     display: flex;
-  
+  gap:10px;
+  justify-content: center;
  align-items: end;
+}
+
+.messages-home{
+    display: flex;
+align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+ align-items: center;
 }
