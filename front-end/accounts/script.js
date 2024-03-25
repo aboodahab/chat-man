@@ -27,28 +27,22 @@ btn.addEventListener("click", (e) => {
     body: JSON.stringify({ email: email.value, password: password.value }),
   })
     .then((y) => y.json())
+
     .then((r) => {
       console.log(r);
       if (r.action === "created") {
-        localStorage.setItem(`r`, JSON.stringify(r.string));
+        window.localStorage.setItem(`r`, JSON.stringify(r.string));
+        checkAndTake();
       }
     });
 });
 function checkAndTake() {
-  let data = "";
-  if (localStorage.getItem("r") === null) {
+  let r = localStorage.getItem("r");
+
+  if (r) {
+    window.location = "/chat/index.html";
+  } else {
     return;
   }
-  data = localStorage.getItem("r");
-  fetch("http://localhost:2000/check", {
-    method: "post",
-    body: JSON.stringify(data),
-  })
-    .then((y) => y.json())
-    .then((r) => {
-      console.log(r);
-    });
-  console.log(data);
-  //window.location = "http://127.0.0.1:5500/chat/index.html";
 }
 window.onload = checkAndTake();

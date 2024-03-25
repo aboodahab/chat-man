@@ -18,6 +18,7 @@ btn.addEventListener("click", (e) => {
     setTimeout(() => {
       paragraph.textContent = ``;
     }, 3500);
+    return;
   }
 
   fetch("http://localhost:2000/signin", {
@@ -34,20 +35,14 @@ btn.addEventListener("click", (e) => {
     });
 });
 function checkAndTake() {
-  let data = "";
-  if (localStorage.getItem("r") === null) {
-    return;
+  let r = localStorage.getItem("r");
+
+  if (r) {
+    window.location = "/chat/index.html";
   }
-  data = localStorage.getItem("r");
-  fetch("http://localhost:2000/check", {
-    method: "post",
-    body: JSON.stringify(data),
-  })
-    .then((y) => y.json())
-    .then((r) => {
-      console.log(r);
-    });
-  console.log(data);
- // window.location = "http://127.0.0.1:5500/chat/index.html";
 }
 window.onload = checkAndTake();
+
+a.addEventListener("click", () => {
+  window.location = "/accounts/login.index.html";
+});
