@@ -1,6 +1,8 @@
 const input = document.querySelector(".i");
 const button = document.querySelector(".btn");
 const messagesHome = document.querySelector(".messages-home");
+const arr = [];
+let rr = "";
 function showButton() {
   check(input.value);
   button.addEventListener("click", createMessageAndShowIt);
@@ -15,7 +17,6 @@ function check(data) {
 
 function createMessageAndShowIt() {
   if (input.value === "") {
-   
     return;
   }
 
@@ -76,6 +77,7 @@ function createMessageAndShowIt() {
 }
 
 function fetchFn() {
+  console.log("realod");
   let r = localStorage.getItem("r");
   if (r) {
     fetch("http://localhost:2000/data", {
@@ -87,7 +89,9 @@ function fetchFn() {
     })
       .then((y) => y.json())
       .then((r) => {
+        rr = r;
         for (let i = 0; i < r.messages.length; i++) {
+          arr.push(r.messages[i]);
           const messageDiv = document.createElement("div");
           const paragraph = document.createElement("p");
           const timeParagraph = document.createElement("p");
@@ -103,9 +107,7 @@ function fetchFn() {
 
           paragraph.style.cssText =
             "margin:20px;font-size: 32px; width:auto; padding-left:12px;padding-bottom:6px; padding-top:6px; padding-right:12px;font-size:26px; background-color:red;color:white;";
-          ;
           if (r.messages[i].string === localStorage.getItem("r")) {
-       
             paragraph.style.cssText =
               "margin:20px;font-size: 32px; width:auto; padding-left:12px;padding-bottom:6px; padding-top:6px; padding-right:12px;font-size:26px; background-color:blueviolet;color:white;";
           }
@@ -116,11 +118,9 @@ function fetchFn() {
       });
     return;
   } else {
-   
     window.location = "/accounts/login.index.html";
   }
 }
-
 window.onload = fetchFn;
 
 input.addEventListener("keyup", showButton);
@@ -182,3 +182,7 @@ function addZero(minutes) {
 }
 // {}
 // []
+setInterval(() => {
+ 
+  return;
+}, 4000);
