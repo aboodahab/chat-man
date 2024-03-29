@@ -81,10 +81,7 @@ async function check(data) {
   console.log({ success: true });
 }
 // ----------------------------------------------------------------------------------------------------------------------------------------
-mongoose
-  .connect("mongodb://localhost/message")
-  .then(() => console.log("connect to the data base messages"))
-  .catch(() => console.log("field to connect to database messages"));
+
 const messagesSchema = new mongoose.Schema({
   msgValue: {
     type: String,
@@ -100,10 +97,11 @@ const messagesSchema = new mongoose.Schema({
     required: true,
   },
 });
+
 let msg = mongoose.model("Msg", messagesSchema);
 app.post("/messages", async (req, res) => {
   console.log(req.body, "req.body");
-  if (req.body.string === null || undefined || 0 || "" || false) {
+  if (req.body.string === null) {
     console.log("error");
     res.status(404).json({ msg: "error" });
     return;
@@ -116,12 +114,19 @@ app.post("/messages", async (req, res) => {
   };
   const message = new msg(obj);
   await message.save();
-  res.json({ string: req.body.string });
+  res.json({ string: req.body.string, time });
 });
 app.post("/data", async (req, res) => {
-  let findAllMessages = await msg.find().limit(30);
+  let findAllMessages = await msg.find().limit(20);
 
   res.json({ messages: findAllMessages, string: req.body.string });
+});
+app.post("/chocks", async (req, res) => {
+  let newMessages = await msg.find({ time: { $gt: req.body.time } });
+  if (!newMessages) {
+    return res.json({ new: "" });
+  }
+  res.json({ new: newMessages });
 });
 app.listen(2000, () => {
   console.log("2000");
