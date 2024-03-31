@@ -1,20 +1,29 @@
-function creativeTime(msgTime, ele, hours) {
+function creativeTime(time, ele) {
+  let msgTime = new Date(time);
+
   const OurTime = new Date();
   const msgString = `${msgTime}`;
   const ourString = `${OurTime}`;
   const re = /\d+/gi;
-
+  let hours = "";
   let ourDay = ourString.match(re);
   let msgDay = msgString.match(re);
+  console.log(msgTime.getHours());
   if (msgTime.getHours() > 12) {
     hours = `${msgTime.getHours() - 12}:${addZero(msgTime.getMinutes())}pm`;
+    console.log(hours);
   }
-
+  if (msgTime.getHours() === 12) {
+    hours = `${msgTime.getHours()}:${addZero(msgTime.getMinutes())}pm`;
+    console.log(hours);
+  }
   if (msgTime.getHours() < 12) {
     hours = `${msgTime.getHours()}:${addZero(msgTime.getMinutes())}am`;
+    console.log(hours, "l");
   }
   if (msgTime.getHours() === 0) {
     hours = `12:${addZero(msgTime.getMinutes())}am`;
+    console.log(hours, ":k");
   }
 
   if (ourDay[0] > msgDay[0]) {
@@ -36,7 +45,7 @@ function creativeTime(msgTime, ele, hours) {
       msgTime.getMonth() + 1
     }/${msgTime.getDate()} ${hours}:`;
   }
-  ourDay[1], msgDay[1];
+
   if (ourDay[1] > msgDay[1]) {
     ele.textContent = `${
       ourDay[1] - msgDay[1]
@@ -45,13 +54,15 @@ function creativeTime(msgTime, ele, hours) {
     }/${msgTime.getDate()} ${hours}:`;
   }
 }
+let min = ``;
 function addZero(minutes) {
-  let min = ``;
+  console.log(minutes);
   if (minutes < 10) {
     min = `0${minutes}`;
-
+    console.log(min, minutes);
     return min;
   }
+  console.log(min, minutes);
   return minutes;
 }
 export { addZero, creativeTime };

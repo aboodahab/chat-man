@@ -122,11 +122,12 @@ app.post("/data", async (req, res) => {
   res.json({ messages: findAllMessages, string: req.body.string });
 });
 app.post("/chocks", async (req, res) => {
+
   let newMessages = await msg.find({ time: { $gt: req.body.time } });
   if (!newMessages) {
-    return res.json({ new: "" });
+    return res.json({ new: "" ,success:false});
   }
-  res.json({ new: newMessages });
+  res.json({ new: newMessages,success:true });
 });
 app.listen(2000, () => {
   console.log("2000");

@@ -1,7 +1,6 @@
-
-function saveMessages(value, p,date) {
-;
-  fetch("http://localhost:2000/messages", {
+import { SAVE_MESSAGE } from "./variables.js";
+function saveMessage(value, p, date) {
+  return fetch(SAVE_MESSAGE, {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -11,10 +10,9 @@ function saveMessages(value, p,date) {
   })
     .then((y) => y.json())
     .then((r) => {
-      console.log(date, "o");
-
+      
       date = r.time;
-      console.log(date, "e");
+
       if (r.msg === "error") {
         console.log("errorr");
         return;
@@ -22,6 +20,8 @@ function saveMessages(value, p,date) {
 
       p.style.cssText =
         "margin:20px; width:auto; padding-left:12px;padding-bottom:6px; padding-top:6px; padding-right:12px;font-size:30px; background-color:blueviolet;color:white;";
+
+      return date;
     });
 }
-export { saveMessages, };
+export { saveMessage };
